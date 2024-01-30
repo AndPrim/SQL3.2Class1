@@ -16,34 +16,38 @@ public class BankLoginTest {
     LoginPage loginPage;
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         cleanAuthCodes();
     }
+
     @AfterAll
-    void tearDownAll(){
+    static void tearDownAll () {
         cleanDatabase();
     }
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
         loginPage = open("http://Localhost:9999", LoginPage.class);
     }
+
     @Test
-    void shoulValidUserTest(){
+    void shoulValidUserTest() {
         var authInfo = DataHelper.getAuthInfo();
         var verifyPage = loginPage.validLogin(authInfo);
         verifyPage.verifyVerificationVisiblity();
         var verifyCode = SQLHelper.getVerificationCode();
         verifyPage.validVerify(verifyCode.getCode());
     }
+
     @Test
-    void randomInvalidUserTest(){
+    void randomInvalidUserTest() {
         var authInfo = DataHelper.generateRandomUser();
         loginPage.validLogin(authInfo);
         loginPage.verifyErrorNotification("Ошибка! \nНеверно указан логин или пароль");
     }
 
     @Test
-    void invalidCodeTest(){
+    void invalidCodeTest() {
         var authInfo = DataHelper.getAuthInfo();
         var verifyPage = loginPage.validLogin(authInfo);
         verifyPage.verifyVerificationVisiblity();
@@ -51,8 +55,9 @@ public class BankLoginTest {
         verifyPage.verify(invalidCode.getCode());
         verifyPage.verifyErrorNotification("Ошибка! Неверно указан код! Попробуйте ещё раз.");
     }
+
     @Test
-    void fourInvalidUsersTest(){
+    void fourInvalidUsersTest() {
         var authInfo = DataHelper.getUsersRandomPass();
         loginPage.validLogin(authInfo);
         loginPage.cleanLoginAndPass();
