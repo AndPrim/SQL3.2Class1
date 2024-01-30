@@ -15,17 +15,19 @@ public class LoginPage {
     private SelenideElement button = $("[data-test-id=action-login]");
     private SelenideElement notification = $("[data-test-id=error-notification]" +
             " div.notification__content");
-    public void verifyErrorNotification(String text){
+
+    public void verifyErrorNotification(String text) {
         notification.shouldHave(exactText(text)).shouldBe(visible);
     }
 
-    public VerificationPage validLogin(DataHelper.AuthInfo info){
+    public VerificationPage validLogin(DataHelper.AuthInfo info) {
         login.setValue(info.getLogin());
         pass.setValue(info.getPassword());
         button.click();
         return new VerificationPage();
     }
-    public void cleanLoginAndPass(){
+
+    public void cleanLoginAndPass() {
         login.doubleClick().sendKeys(Keys.DELETE);
         pass.doubleClick().sendKeys(Keys.DELETE);
 
