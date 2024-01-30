@@ -2,6 +2,7 @@ package test;
 
 import data.DataHelper;
 import data.SQLHelper;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,10 +19,10 @@ public class BankLoginTest {
     void tearDown(){
         cleanAuthCodes();
     }
-//    @AfterEach
-//    void tearDownAll(){
-//        cleanDatabase();
-//    }
+    @AfterAll
+    void tearDownAll(){
+        cleanDatabase();
+    }
     @BeforeEach
     void setUp(){
         loginPage = open("http://Localhost:9999", LoginPage.class);
