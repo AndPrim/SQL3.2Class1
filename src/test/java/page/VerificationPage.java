@@ -19,7 +19,7 @@ public class VerificationPage {
     }
     public void verify(String verifyCode){
         codeField.setValue(verifyCode);
-        verifyButton.shouldBe();
+        verifyButton.shouldBe().click();
     }
     public DashboardPage validVerify(String verifyCode){
         verify(verifyCode);

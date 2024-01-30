@@ -27,11 +27,43 @@ public class BankLoginTest {
         loginPage = open("http://Localhost:9999", LoginPage.class);
     }
     @Test
-    void shoulValid(){
+    void shoulValidUserTest(){
         var authInfo = DataHelper.getAuthInfo();
         var verifyPage = loginPage.validLogin(authInfo);
         verifyPage.verifyVerificationVisiblity();
         var verifyCode = SQLHelper.getVerificationCode();
         verifyPage.validVerify(verifyCode.getCode());
     }
+    @Test
+    void randomInvalidUserTest(){
+        var authInfo = DataHelper.generateRandomUser();
+        loginPage.validLogin(authInfo);
+        loginPage.verifyErrorNotification("Ошибка! \nНеверно указан логин или пароль");
+    }
+
+    @Test
+    void invalidCodeTest(){
+        var authInfo = DataHelper.getAuthInfo();
+        var verifyPage = loginPage.validLogin(authInfo);
+        verifyPage.verifyVerificationVisiblity();
+        var invalidCode = DataHelper.generateRandomVerificationCode();
+        verifyPage.verify(invalidCode.getCode());
+        verifyPage.verifyErrorNotification("Ошибка! Неверно указан код! Попробуйте ещё раз.");
+    }
+    @Test
+    void fourInvalidUsersTest(){
+        var authInfo = DataHelper.getUsersRandomPass();
+        loginPage.validLogin(authInfo);
+        loginPage.cleanLoginAndPass();
+        authInfo = DataHelper.getUsersRandomPass();
+        loginPage.validLogin(authInfo);
+        loginPage.cleanLoginAndPass();
+        authInfo = DataHelper.getUsersRandomPass();
+        loginPage.validLogin(authInfo);
+        loginPage.cleanLoginAndPass();
+        authInfo = DataHelper.getUsersRandomPass();
+        loginPage.validLogin(authInfo);
+        loginPage.cleanLoginAndPass();
+    }
+
 }
