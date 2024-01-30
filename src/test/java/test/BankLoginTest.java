@@ -63,7 +63,7 @@ public class BankLoginTest {
         loginPage.cleanLoginAndPass();
         authInfo = DataHelper.getUsersRandomPass();
         loginPage.validLogin(authInfo);
-        loginPage.cleanLoginAndPass();
+        loginPage.verifyErrorNotification("Ошибка! \nНеверно указан логин или пароль");
     }
 
 }
