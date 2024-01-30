@@ -63,7 +63,8 @@ public class BankLoginTest {
         loginPage.cleanLoginAndPass();
         authInfo = DataHelper.getUsersRandomPass();
         loginPage.validLogin(authInfo);
-        loginPage.verifyErrorNotification("Ошибка! \nНеверно указан логин или пароль");
+        loginPage.verifyErrorNotification("Пользователь заблокирован! \nВы 3 раза неверно ввели пароль." +
+                " \nДля разблокировки аккаунта Вам необходимо обратиться в службу поддержки клиентов банка.");
     }
 
 }
